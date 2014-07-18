@@ -15,7 +15,7 @@ def application(environ, start_response):
             return ['<html><body><a href="https://github.com/mattbornski/Python-WSGI-Proxy"><h1>Python WSGI Proxy</h1></a><p>For example:<br><a href="/' + DEMO_URL + '">http://proxy.bornski.com/' + DEMO_URL + '</a></p><p style="background-color:yellow"><blink><marquee><h3 style="color:red">Do not use this proxy to access sensitive HTTPS resources.  There is no encryption from your computer to this proxy.  This warning is extremely obnoxious so that you remember that I warned you.</h3></marquee></blink></p></body></html>']
         elif path.startswith('/http://') or path.startswith('/https://'):
             response = urllib2.urlopen(path.lstrip('/'))
-            start_response(str(response.code), [('Content-Type', response.headers.get('Content-Type', 'text/plain'))])
+            start_response(str(response.code), [('Content-Type', response.headers.get('Content-Type', 'text/plain')), ('Access-Control-Allow-Origin', '*')])
             return [response.read()]
         else:
             raise ValueError('unknown protocol')
